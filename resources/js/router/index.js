@@ -8,7 +8,7 @@ import Register from '../pages/Register.vue';
 
 const routes = [
     { path: '/', component: Login, meta: { guest: true } },
-    { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },
+    { path: '/dashboard', component: TaskList, meta: { requiresAuth: true } },
     { path: '/tasks', component: TaskList, meta: { requiresAuth: true } },
     { path: '/task/create', component: TaskCreate, meta: { requiresAuth: true } },
     { path: '/task/edit/:id', component: TaskEdit, props: true, meta: { requiresAuth: true } },

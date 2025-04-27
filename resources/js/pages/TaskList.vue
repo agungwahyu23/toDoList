@@ -1,6 +1,12 @@
 <template>
-    <div class="container">
-        <h2>Task List</h2>
+    <div class="container mt-3">
+        <div class="mb-3">
+            <h5>Halo, Anda login sebagai {{ userName }}</h5>
+            <blockquote class="blockquote mt-3">
+                Quotes of the day:
+                <p class="mb-0"><i>"{{ quote }}"</i></p>
+            </blockquote>
+        </div>
         <router-link to="task/create" class="btn btn-primary btn-sm">Add</router-link>
 
         <div class="row mt-2">
@@ -52,10 +58,14 @@ export default {
             tasks: [], 
             filteredTasks: [], 
             selectedStatus: '', 
+            userName: '',
+            quote: '', 
         };
     },
     mounted() {
         this.fetchTasks();
+        this.fetchProfile();
+        this.fetchQuote();
     },
     methods: {
         async fetchTasks() {
@@ -65,6 +75,23 @@ export default {
                 this.filteredTasks = this.tasks; 
             } catch (error) {
                 console.error('Error fetching tasks:', error);
+            }
+        },
+        async fetchProfile() {
+            try {
+                const response = await axios.get('/profile');
+                this.userName = response.data.name;
+                
+            } catch (error) {
+                console.error('Error fetching user:', error);
+            }
+        },
+        async fetchQuote() {
+            try {
+                const response = await axios.get('/quotes');
+                this.quote = response.data[0]; 
+            } catch (error) {
+                console.error('Error fetching quote:', error);
             }
         },
         filterTasks() {

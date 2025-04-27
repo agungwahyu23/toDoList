@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client as GuzClient;
 
 class TaskController extends Controller
 {
@@ -86,5 +87,22 @@ class TaskController extends Controller
     public function test() 
     {
         return response()->json('hello', 200);    
+    }
+
+    public function fetchQuotes() {
+
+        $client = new GuzClient();
+        $quotes=[];
+
+        $request  =  $client->get('http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en');
+        $data     = json_decode($request->getBody()->getContents());
+        $quotes[] = $data->quoteText . "-" . $data->quoteAuthor;
+ 
+        $client   = new GuzClient();
+        $request  = $client->get('https://favqs.com/api/qotd');
+        $data     = json_decode($request->getBody()->getContents());
+        $quotes[] = $data->quote->body . "-" . $data->quote->author;
+
+        return response()->json($quotes);
     }
 }

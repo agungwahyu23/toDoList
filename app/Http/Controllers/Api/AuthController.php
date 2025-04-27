@@ -62,4 +62,11 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Logged out successfully'], 200);
     }
+
+    public function profile(Request $request) 
+    {
+        $query = User::where('id', $request->user()->id)->first();
+        
+        return response()->json($query);
+    }
 }

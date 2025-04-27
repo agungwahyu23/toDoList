@@ -18,12 +18,14 @@ use App\Http\Controllers\Api\TaskController;
 
 Route::prefix('v1')->group(function () {
     Route::get('test', [TaskController::class, 'test']);
+    Route::get('quotes', [TaskController::class, 'fetchQuotes']);
 
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
+        Route::get('profile', [AuthController::class, 'profile']);
         
         Route::get('tasks', [TaskController::class, 'index']);
         Route::post('tasks', [TaskController::class, 'store']);
