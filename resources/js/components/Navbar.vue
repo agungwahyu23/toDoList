@@ -10,7 +10,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                      <router-link class="nav-link" to="/dashboard">Home</router-link>
+                    </li>
+                    <li class="nav-item">
+                      <router-link class="nav-link" to="/tasks">Task</router-link>
                     </li>
                 </ul>
                 <button @click="logout" class="btn btn-danger">Logout</button>
@@ -26,7 +29,7 @@ export default {
   methods: {
     async logout() {
       try {
-        await axios.post('logout');
+        await axios.post('/logout');
         localStorage.removeItem('token');
         delete axios.defaults.headers.common['Authorization'];
         this.$router.push('/login');

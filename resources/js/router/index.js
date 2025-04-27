@@ -4,14 +4,16 @@ import Dashboard from '../pages/Dashboard.vue';
 import TaskList from '../pages/TaskList.vue';
 import TaskCreate from '../pages/TaskCreate.vue';
 import TaskEdit from '../pages/TaskEdit.vue';
+import Register from '../pages/Register.vue';
 
 const routes = [
-    { path: '/', component: Login },
-    { path: '/dashboard', component: Dashboard },
-    { path: '/tasks', component: TaskList },
-    { path: '/task/create', component: TaskCreate },
-    { path: '/task/edit/:id', component: TaskEdit, props: true },
-    { path: '/login', component: Login },
+    { path: '/', component: Login, meta: { guest: true } },
+    { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },
+    { path: '/tasks', component: TaskList, meta: { requiresAuth: true } },
+    { path: '/task/create', component: TaskCreate, meta: { requiresAuth: true } },
+    { path: '/task/edit/:id', component: TaskEdit, props: true, meta: { requiresAuth: true } },
+    { path: '/login', component: Login, meta: { guest: true } },
+    { path: '/register', component: Register },
 ];
 
 const router = createRouter({

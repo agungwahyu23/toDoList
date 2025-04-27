@@ -1,14 +1,10 @@
 <template>
   <div class="container mt-5">
     <h2>Dashboard</h2>
-    <TaskTable />
+    <h3>Halo selamat datang di Halaman Dashboard To Do List</h3>
   </div>
 </template>
 
 <script>
-import TaskTable from '../components/TaskTable.vue';
 
-export default {
-  components: { TaskTable }
-}
 </script>

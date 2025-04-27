@@ -49,9 +49,9 @@ import axios from "axios";
 export default {
     data() {
         return {
-            tasks: [], // Semua data task
-            filteredTasks: [], // Data yang sudah difilter
-            selectedStatus: '', // Status yang dipilih
+            tasks: [], 
+            filteredTasks: [], 
+            selectedStatus: '', 
         };
     },
     mounted() {
@@ -60,17 +60,16 @@ export default {
     methods: {
         async fetchTasks() {
             try {
-                const response = await axios.get('/tasks'); // Mengambil data task dari API
-                this.tasks = response.data; // Simpan data task ke state tasks
-                this.filteredTasks = this.tasks; // Inisialisasi filteredTasks dengan semua data
+                const response = await axios.get('/tasks'); 
+                this.tasks = response.data; 
+                this.filteredTasks = this.tasks; 
             } catch (error) {
                 console.error('Error fetching tasks:', error);
             }
         },
         filterTasks() {
-            // Filter data berdasarkan status
             if (this.selectedStatus === '') {
-                this.filteredTasks = this.tasks; // Tampilkan semua data jika status kosong
+                this.filteredTasks = this.tasks; 
             } else {
                 this.filteredTasks = this.tasks.filter(task => task.status == this.selectedStatus);
             }
@@ -79,7 +78,7 @@ export default {
             if (confirm('Are you sure to delete this task?')) {
                 try {
                     await axios.delete(`/tasks/${id}`);
-                    this.fetchTasks(); // Fetch ulang data setelah menghapus task
+                    this.fetchTasks();
                 } catch (error) {
                     console.error('Error deleting task:', error);
                 }

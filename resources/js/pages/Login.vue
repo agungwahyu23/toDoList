@@ -9,6 +9,7 @@
                 <input v-model="password" type="password" class="form-control" placeholder="Password" required>
             </div>
             <button class="btn btn-primary" type="submit">Login</button>
+            <router-link to="/register">Daftar</router-link>
         </form>
     </div>
 </template>
@@ -26,18 +27,16 @@ export default {
     methods: {
         async login() {
             try {
-                const response = await axios.post('login', {
+                const response = await axios.post('/login', {
                     email: this.email,
                     password: this.password,
                 });
-
-                const token = response.data.token;
-                localStorage.setItem('token', token);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-                this.$router.push('/tasks');
+                
+                localStorage.setItem('token', response.data.token);
+                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+                this.$router.push('/dashboard');
             } catch (error) {
-                console.error('Login gagal', error);
+                console.error('Login failed:', error.response.data);
             }
         },
     }

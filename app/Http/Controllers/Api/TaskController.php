@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum'); // Pastikan middleware auth aktif
+    }
+    
     public function index(Request $request) 
     {
         $query = Task::where('user_id', $request->user()->id);

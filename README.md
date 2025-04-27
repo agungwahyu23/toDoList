@@ -20,6 +20,7 @@ Ini merupakan aplikasi To Do List dengan fitur Login, Register, dan CRUD
 - Lakukan migrasi php artisan migrate
 - Jalankan seed dengan php artisan db:seed atau php artisan db:seed --class=UserSeeder
 - Build frontend dengan npm run dev
+- jalankan aplikasi dengan php artisan serve lalu kunjungi http://127.0.0.1:8000/
 
 ## Projek ini dibuat dengan menggunakan
 - laravel 10
