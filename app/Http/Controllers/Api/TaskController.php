@@ -11,7 +11,7 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum'); // Pastikan middleware auth aktif
+        // $this->middleware('auth:sanctum'); // Pastikan middleware auth aktif
     }
     
     public function index(Request $request) 

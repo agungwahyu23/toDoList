@@ -34,6 +34,7 @@ export default {
                 
                 localStorage.setItem('token', response.data.token);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+                await new Promise(resolve => setTimeout(resolve, 100));
                 this.$router.push('/dashboard');
             } catch (error) {
                 console.error('Login failed:', error.response.data);
