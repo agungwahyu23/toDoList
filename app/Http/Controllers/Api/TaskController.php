@@ -20,7 +20,6 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title' => 'string|max:255|required',
             'description' => 'string',
-            'status' => 'boolean',
         ]);  
 
         if (!$validated) {
