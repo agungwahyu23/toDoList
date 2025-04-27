@@ -10,7 +10,13 @@ class TaskController extends Controller
 {
     public function index(Request $request) 
     {
-        $task = Task::where('user_id', $request->user()->id)->latest()->get();
+        $query = Task::where('user_id', $request->user()->id);
+
+        if ($request->has('status') && $request->status !== '' && $request->status !== null) {
+            $query->where('status', $request->status);
+        }
+    
+        $task = $query->latest()->get();
         
         return response()->json($task);
     }

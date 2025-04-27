@@ -13,8 +13,8 @@
       <div class="mb-3">
         <label for="status" class="form-label">Status</label>
         <select class="form-control" id="status" v-model="task.status">
-          <option value="completed">Completed</option>
-          <option value="incomplete">Incomplete</option>
+          <option value="1" :selected="task.status === '1'">Selesai</option>
+          <option value="0" :selected="task.status === '0'">Belum Selesai</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary">Update</button>
@@ -38,7 +38,9 @@ export default {
   async created() {
     const taskId = this.$route.params.id;
     try {
-      const response = await axios.get(`/api/tasks/${taskId}`);
+      const response = await axios.get(`/tasks/${taskId}`);
+      console.log(response.data);
+      
       this.task = response.data;
     } catch (error) {
       console.error(error);
@@ -48,7 +50,7 @@ export default {
     async updateTask() {
       const taskId = this.$route.params.id;
       try {
-        await axios.put(`/api/tasks/${taskId}`, this.task);
+        await axios.put(`/tasks/${taskId}`, this.task);
         this.$router.push('/tasks'); // Redirect ke halaman task setelah update
       } catch (error) {
         console.error(error);

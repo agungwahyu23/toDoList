@@ -13,8 +13,8 @@
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-control" id="status" v-model="task.status">
-                    <option value="completed">Completed</option>
-                    <option value="incomplete">Incomplete</option>
+                    <option value="1">Selesai</option>
+                    <option value="0">Belum Selesai</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>

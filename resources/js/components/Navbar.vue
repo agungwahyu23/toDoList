@@ -12,12 +12,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/tasks">Task</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/login">Login</router-link>
-                    </li>
                 </ul>
                 <button @click="logout" class="btn btn-danger">Logout</button>
             </div>

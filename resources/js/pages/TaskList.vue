@@ -2,6 +2,21 @@
     <div class="container">
         <h2>Task List</h2>
         <router-link to="task/create" class="btn btn-primary btn-sm">Add</router-link>
+
+        <div class="row mt-2">
+            <h6>Filter</h6>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-control" id="status" v-model="selectedStatus" @change="filterTasks">
+                        <option value="">Semua</option>
+                        <option value="1">Selesai</option>
+                        <option value="0">Belum Selesai</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <table id="task-table" class="table table-striped">
             <thead>
                 <tr>
@@ -13,8 +28,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in task" :key="item.id">
-                    <td>{{ task.indexOf(item) + 1 }}</td>
+                <tr v-for="(item, index) in filteredTasks" :key="item.id">
+                    <td>{{ index + 1 }}</td>
                     <td>{{ item.title }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.status == '0' ? 'Belum Selesai' : 'Selesai' }}</td>
@@ -34,9 +49,9 @@ import axios from "axios";
 export default {
     data() {
         return {
-            task: [],
-            loading: false,
-            error: '',
+            tasks: [], // Semua data task
+            filteredTasks: [], // Data yang sudah difilter
+            selectedStatus: '', // Status yang dipilih
         };
     },
     mounted() {
@@ -45,35 +60,29 @@ export default {
     methods: {
         async fetchTasks() {
             try {
-                const response = await axios.get('/tasks');
-                console.log(response.data);
-
-                this.task = Array.isArray(response.data) ? response.data : response.data.data;
-                this.$nextTick(() => {
-                    if ($.fn.DataTable.isDataTable('#task-table')) {
-                        $('#task-table').DataTable().destroy();
-                    }
-                    $('#task-table').DataTable();
-                });
+                const response = await axios.get('/tasks'); // Mengambil data task dari API
+                this.tasks = response.data; // Simpan data task ke state tasks
+                this.filteredTasks = this.tasks; // Inisialisasi filteredTasks dengan semua data
             } catch (error) {
-                console.error(error);
+                console.error('Error fetching tasks:', error);
+            }
+        },
+        filterTasks() {
+            // Filter data berdasarkan status
+            if (this.selectedStatus === '') {
+                this.filteredTasks = this.tasks; // Tampilkan semua data jika status kosong
+            } else {
+                this.filteredTasks = this.tasks.filter(task => task.status == this.selectedStatus);
             }
         },
         async deleteTask(id) {
             if (confirm('Are you sure to delete this task?')) {
                 try {
-                    this.destroyDataTable();
-
                     await axios.delete(`/tasks/${id}`);
-                    this.fetchTasks();
+                    this.fetchTasks(); // Fetch ulang data setelah menghapus task
                 } catch (error) {
-                    console.error(error);
+                    console.error('Error deleting task:', error);
                 }
-            }
-        },
-        async destroyDataTable() {
-            if ($.fn.DataTable.isDataTable('#task-table')) {
-                $('#task-table').DataTable().destroy();
             }
         },
     },
